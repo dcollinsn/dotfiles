@@ -1,0 +1,1 @@
+/home/dcollins/.vim/.vimrc
