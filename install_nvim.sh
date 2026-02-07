@@ -10,7 +10,7 @@
     sudo make install
 )
 
-cp -R .config-nvim ~/.config/nvim
+cp -R .config-nvim/* ~/.config/nvim/
 
 if [[ "$EDITOR" != "nvim" ]]; then
     echo "export EDITOR=nvim" >> ~/.bashrc
