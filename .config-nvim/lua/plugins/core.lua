@@ -221,4 +221,10 @@ return {
             vim.keymap.set("v", "<Right>", "<Plug>GoVSMRight", {})
         end,
     },
+    {
+        'RaafatTurki/hex.nvim',
+        config = function()
+            require('hex').setup()
+        end,
+    },
 }

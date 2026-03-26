@@ -10,6 +10,7 @@
     sudo make install
 )
 
+mkdir -p ~/.config/nvim/
 cp -R .config-nvim/* ~/.config/nvim/
 
 if [[ "$EDITOR" != "nvim" ]]; then
