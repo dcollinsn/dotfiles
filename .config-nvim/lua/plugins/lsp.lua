@@ -12,7 +12,7 @@ return {
     config = function()
       -- Setup mason first
       require("mason").setup()
-      
+
       -- Get capabilities
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -27,7 +27,7 @@ return {
               capabilities = capabilities,
             })
           end,
-          
+
           -- Custom handler for pyright
           ["pyright"] = function()
             require("lspconfig").pyright.setup({
@@ -42,7 +42,7 @@ return {
               },
             })
           end,
-          
+
           -- Custom handler for lua_ls
           ["lua_ls"] = function()
             require("lspconfig").lua_ls.setup({
@@ -167,4 +167,10 @@ return {
   --     })
   --   end,
   -- },
+  {
+    'stevearc/overseer.nvim',
+    ---@module 'overseer'
+    ---@type overseer.SetupOpts
+    opts = {},
+  },
 }
