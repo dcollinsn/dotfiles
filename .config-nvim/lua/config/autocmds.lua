@@ -110,6 +110,12 @@ autocmd("FileType", {
     vim.opt_local.textwidth = 99
     vim.opt_local.formatoptions = "cqtrol"
     vim.opt_local.comments = "b:#"
+    vim.g.python_indent = {
+      open_paren = "shiftwidth()",
+      nested_paren = "shiftwidth()",
+      continue = "shiftwidth()",
+      closed_paren_align_last_line = false,
+    }
   end,
 })
 

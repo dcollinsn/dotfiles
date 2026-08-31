@@ -94,6 +94,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+      local npairs = require("nvim-autopairs")
 
       cmp.setup({
         snippet = {
@@ -106,7 +107,17 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping(function(fallback)
+            if cmp.visible() and cmp.get_selected_entry() then
+              cmp.confirm({ select = false })
+            else
+              vim.api.nvim_feedkeys(
+                npairs.autopairs_cr(),
+                "n",
+                false
+              )
+            end
+          end, { "i", "s" }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()

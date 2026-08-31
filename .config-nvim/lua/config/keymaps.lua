@@ -161,7 +161,10 @@ keymap("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Quickfix diagnosti
 
 -- Better search - highlight briefly
 keymap("n", "n", function()
-  vim.cmd("normal! n")
+  local ok = pcall(vim.cmd, "normal! n")
+  if not ok then
+    return
+  end
   vim.fn.matchadd("IncSearch", [[\c\%#]] .. vim.fn.getreg("/"), 101)
   vim.cmd("redraw")
   vim.defer_fn(function()
@@ -170,7 +173,10 @@ keymap("n", "n", function()
 end, opts)
 
 keymap("n", "N", function()
-  vim.cmd("normal! N")
+  local ok = pcall(vim.cmd, "normal! N")
+  if not ok then
+    return
+  end
   vim.fn.matchadd("IncSearch", [[\c\%#]] .. vim.fn.getreg("/"), 101)
   vim.cmd("redraw")
   vim.defer_fn(function()
