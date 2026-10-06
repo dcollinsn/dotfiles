@@ -1,6 +1,26 @@
 #!/bin/sh
-case "$2" in
-    connectivity-change)
-        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
+case "${2:-}" in
+    ''|connectivity-change)
+        response=$(curl --fail --silent --show-error --connect-timeout 5 --max-time 10 \
+            'https://ipwho.is/?fields=success,timezone.id') || exit 1
+        timezone=$(printf '%s' "$response" | /usr/bin/python3 -c '
+import json
+import sys
+
+try:
+    data = json.load(sys.stdin)
+    timezone = data["timezone"]["id"]
+    if data.get("success") is not True or not isinstance(timezone, str) or not timezone:
+        raise ValueError("unsuccessful lookup or missing timezone")
+except (ValueError, KeyError, TypeError) as error:
+    sys.exit(f"Timezone lookup failed: {error}")
+print(timezone)
+') || exit 1
+        printf 'Detected timezone: %s\n' "$timezone"
+        timedatectl set-timezone "$timezone" || exit 1
+        printf 'Timezone set to %s\n' "$timezone"
+    ;;
+    *)
+        printf 'Skipping NetworkManager action: %s\n' "$2"
     ;;
 esac
