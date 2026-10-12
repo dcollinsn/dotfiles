@@ -1,5 +1,7 @@
-sudo pacman -S pyenv nvm discord
-pamac install synology-drive slack-desktop
+sudo pacman -S pyenv nvm discord syncthing
+pamac install slack-desktop
+pamac remove synology-drive
+systemctl --user enable --now syncthing.service
 
 source /usr/share/nvm/init-nvm.sh
 
@@ -21,3 +23,6 @@ if ! sudo grep -qE '^[[:space:]]*deny[[:space:]]*=[[:space:]]*0([[:space:]]|$)' 
   echo 'deny = 0' | sudo tee -a /etc/security/faillock.conf >/dev/null
 fi
 sudo faillock --reset
+
+# Restore the saved printer queues and default printer.
+bash "$(dirname -- "${BASH_SOURCE[0]}")/install_printers.sh"

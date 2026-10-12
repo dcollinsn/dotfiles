@@ -130,6 +130,13 @@ return {
                     line = "#",
                 },
             })
+
+            local ft = require("Comment.ft")
+            -- JSON comments are useful while editing, but aren't valid strict JSON.
+            ft({ "json", "jsonc", "json5", "javascript" }, { "//%s", "/*%s*/" })
+            ft.set("python", "#%s")
+            ft.set("html", { "<!--%s-->", "<!--%s-->" })
+            ft({ "tex", "plaintex", "latex" }, "%%s")
         end,
     },
 

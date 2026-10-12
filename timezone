@@ -1,6 +1,11 @@
 #!/bin/sh
 case "${2:-}" in
     ''|connectivity-change)
+        wireguard_interfaces=$(ip -o link show up type wireguard) || exit 1
+        if [ -n "$wireguard_interfaces" ]; then
+            printf 'Skipping timezone update: WireGuard interface is up\n'
+            exit 0
+        fi
         response=$(curl --fail --silent --show-error --connect-timeout 5 --max-time 10 \
             'https://ipwho.is/?fields=success,timezone.id') || exit 1
         timezone=$(printf '%s' "$response" | /usr/bin/python3 -c '

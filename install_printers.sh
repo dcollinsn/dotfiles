@@ -29,9 +29,14 @@ for index in 1 2; do
         -o cupsPrintQuality=High -o print-quality-default=5 \
         -o printer-resolution-default=1200dpi -o print-color-mode-default=monochrome
 done
-as_root lpadmin -p "$HP_4001_QUEUE" -E -v "$HP_4001_URI" \
-    -P "$SCRIPT_DIR/printers/profiles/HP-4001.ppd" -D 'HP LaserJet Pro 4001' \
-    -o printer-is-shared=false -o ColorModel=Gray -o print-color-mode-default=monochrome
+for prefix in HP_4001 HP_4001_2; do
+    queue_var="${prefix}_QUEUE"
+    uri_var="${prefix}_URI"
+    service_var="${prefix}_SERVICE"
+    as_root lpadmin -p "${!queue_var}" -E -v "${!uri_var}" \
+        -P "$SCRIPT_DIR/printers/profiles/HP-4001.ppd" -D "${!service_var}" \
+        -o printer-is-shared=false -o ColorModel=Gray -o print-color-mode-default=monochrome
+done
 as_root lpadmin -d "$DEFAULT_QUEUE"
 
 # User defaults override system defaults, so normalize both M607s here too.
@@ -54,5 +59,5 @@ as_root install -m 644 "$SCRIPT_DIR/printers/printers.conf" /usr/local/share/dot
 as_root install -m 644 "$SCRIPT_DIR/printers/m607-store-only.ipp" "$SCRIPT_DIR/printers/m607-validate-storage.ipp" /usr/local/share/dotfiles-printers/printers/
 as_root install -m 755 "$SCRIPT_DIR/m607-store-only.sh" /usr/local/bin/m607-store-only
 printf '\nInstalled queues (printers may be offline):\n'
-lpstat -v "$BROTHER_QUEUE" "$M607_1_QUEUE" "$M607_2_QUEUE" "$HP_4001_QUEUE"
+lpstat -v "$BROTHER_QUEUE" "$M607_1_QUEUE" "$M607_2_QUEUE" "$HP_4001_QUEUE" "$HP_4001_2_QUEUE"
 printf '\nDefault: %s\nStore a PDF: m607-store-only document.pdf\n' "$DEFAULT_QUEUE"
