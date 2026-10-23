@@ -29,7 +29,7 @@ for index in 1 2; do
         -o cupsPrintQuality=High -o print-quality-default=5 \
         -o printer-resolution-default=1200dpi -o print-color-mode-default=monochrome
 done
-for prefix in HP_4001 HP_4001_2; do
+for prefix in HP_4001 HP_4001_2 HP_4001_3; do
     queue_var="${prefix}_QUEUE"
     uri_var="${prefix}_URI"
     service_var="${prefix}_SERVICE"
@@ -59,5 +59,5 @@ as_root install -m 644 "$SCRIPT_DIR/printers/printers.conf" /usr/local/share/dot
 as_root install -m 644 "$SCRIPT_DIR/printers/m607-store-only.ipp" "$SCRIPT_DIR/printers/m607-validate-storage.ipp" /usr/local/share/dotfiles-printers/printers/
 as_root install -m 755 "$SCRIPT_DIR/m607-store-only.sh" /usr/local/bin/m607-store-only
 printf '\nInstalled queues (printers may be offline):\n'
-lpstat -v "$BROTHER_QUEUE" "$M607_1_QUEUE" "$M607_2_QUEUE" "$HP_4001_QUEUE" "$HP_4001_2_QUEUE"
+lpstat -v "$BROTHER_QUEUE" "$M607_1_QUEUE" "$M607_2_QUEUE" "$HP_4001_QUEUE" "$HP_4001_2_QUEUE" "$HP_4001_3_QUEUE"
 printf '\nDefault: %s\nStore a PDF: m607-store-only document.pdf\n' "$DEFAULT_QUEUE"

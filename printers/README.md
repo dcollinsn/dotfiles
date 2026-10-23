@@ -14,14 +14,17 @@ are restored too.
 | Queue | Printer | Saved defaults |
 | --- | --- | --- |
 | `IPP_HP_4001` | HP 4001, serial VNL0274691 | Letter, grayscale, normal quality |
-| `IPP_HP_4001_2` | HP 4001, serial VNL0274695 | Letter, grayscale, normal quality; default printer |
+| `IPP_HP_4001_2` | HP 4001, serial VNL0274695 | Letter, grayscale, normal quality |
+| `IPP_HP_4001_3` | HP 4001, serial VNL0274692 | Letter, grayscale, normal quality; default printer |
 | `IPP_HP_M607_1` | M607, serial PHBCT9C122 | Letter, grayscale, high quality, 1200 dpi |
 | `IPP_HP_M607_2` | M607, serial PHBCT9C124 | Same profile and defaults as M607 1 |
 | `Brother2270` | Brother HL-2270DW at 192.168.1.244 | brlaser driver |
 
 The HP profiles were exported from working CUPS queues on October 6, 2026.
-Both M607s use `profiles/HP-M607.ppd`. Both 4001s use `profiles/HP-4001.ppd`.
-The second 4001 was identified over USB on October 9, 2026. The main
+Both M607s use `profiles/HP-M607.ppd`. All three 4001s use `profiles/HP-4001.ppd`.
+The second 4001 was identified over USB on October 9, 2026, and the third on
+October 23, 2026. Each queue targets one physical printer's DNS-SD identity;
+select the queue matching the connected unit. The main
 `setup_manjaro.sh` also runs this printer installer.
 Laptop-specific supply and translation URLs were removed; the saved profiles
 use their embedded English labels. These profiles require the CUPS 2.x
